@@ -24,16 +24,20 @@ makeCacheMatrix <- function(x = matrix()) {
 ## If the object is not stored in cached it is created and set to cached and retuned to calling context.
 cacheSolve <- function(x, ...) 
 {
-    ## Get the inverse value of 'x'
-    invValX <- x$getinverse()
-    if (!is.null(invValX))
-    {
-        message("The cached value is returned.")
-        return(invValX)
-    } else {
-        invValX <- solve(x$get())
-        x$setinverse(invValX)
-    }
+	## Get the inverse value of 'x' if any
+	invValX <- x$getinverse()
     
-    return(invValX)
+	## is there any object in cache?
+	if (!is.null(invValX))
+	{
+		message("The cached value is returned.")
+        	return(invValX)
+	}
+	
+	## Cache is empty, calculate the value and store it in cache
+	invValX <- solve(x$get())
+        #set the object into cache
+        x$setinverse(invValX)
+    
+	return(invValX)
 }
